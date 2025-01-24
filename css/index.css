@@ -99,7 +99,7 @@ nav {
     position: relative;
     width: 100%;
     height: 100vh; /* 全屏高度 */
-    background-image: url('img/top-image.jpg'); /* 封面图路径 */
+    background-image: url('/img/top-image.jpg'); /* 封面图路径 */
     background-size: cover;
     background-position: center;
     display: flex;
