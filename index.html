@@ -1,0 +1,268 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <title>粼光工作室</title>
+    <meta name="description" content="粼光工作室">
+    <meta name="keywords" content="粼光工作室">
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+
+        }
+
+        .div {
+            perspective: 500;
+            -webkit-perspective: 500;
+            width: 100%;
+            height: 100%;
+            animation-name: float;
+            animation-duration: 1.75s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        .rotate {
+            animation-name: rotate;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+            width: 250px;
+            height: 250px;
+            margin-left: calc(50% - 125px);
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotateY(360deg);
+            }
+
+            25% {
+                transform: rotateY(270deg);
+            }
+
+            50% {
+                transform: rotateY(180deg);
+            }
+
+            75% {
+                transform: rotateY(90deg);
+            }
+
+            100% {
+                transform: rotateY(0deg);
+            }
+        }
+
+        .shadow {
+            width: 128px;
+            height: 128px;
+            margin-left: calc(50% - 64px);
+            border-radius: 128px;
+            background-color: #999999;
+            transform: rotateX(75deg);
+            animation-name: blur;
+            animation-duration: 1.75s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+
+        @keyframes blur {
+            0% {
+                filter: blur(48px);
+            }
+
+            50% {
+                filter: blur(24px);
+            }
+
+            100% {
+                filter: blur(48px);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(24px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .button {
+            margin-top: 50px;
+            display: block;
+            /* 使按钮作为块级元素显示 */
+            margin: 30px auto;
+            /* 上下边距为20px，左右自动（居中） */
+            border: none;
+            padding: 20px 30px;
+            /* 调整内边距 */
+            background: white;
+            /* 背景颜色 */
+            border-radius: 50px;
+            /* 圆角边框 */
+            transition: background-color 0.3s;
+            /* 背景颜色变化的过渡效果 */
+            cursor: pointer;
+            /* 鼠标悬停时显示指针 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            /* 添加阴影 */
+            text-align: center;
+            /* 文本居中 */
+            width: auto;
+            /* 自动宽度 */
+            max-width: 200px;
+            /* 最大宽度限制 */
+            font-size: 18px;
+            /* 设置字体大小 */
+            font-weight: bold;
+            /* 设置字体加粗 */
+        }
+
+        .button:hover {
+            background: #f1f3f5;
+            /* 鼠标悬停时的背景颜色 */
+        }
+
+        .button:active {
+            background: #5291FF;
+            /* 点击时的背景颜色 */
+        }
+
+        footer {
+            background-color: #f8f9fa;
+            /* 背景颜色 */
+            background-image: url('/background-image.jpg');
+            /* 背景图片 */
+            padding: 20px;
+            /* 内边距 */
+            color: black;
+        }
+
+        footer img {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="text-align: center;margin-top: 50px;" id="title"></h1>
+    <div class="div">
+        <img src="/favicon.ico" class="rotate" id="rotate">
+    </div>
+    <div class="shadow"></div>
+    <h3 style="margin: 16px;text-align: center;" id="timer"></h3>
+    <p style="margin: 16px;text-align: center;">粼光工作室提供技术支持</p>
+    <button class="button" id="switchModeBtn">自动旋转</button>
+    <audio src="Funky Town.m4a" autoplay="autoplay" loop="loop" id="music"></audio>
+    <script>
+        name = "粼光";
+        document.documentElement.addEventListener("click", function() {
+            document.getElementById('music').play();
+        });
+        var startTime = new Date();
+
+        function freshTime() {
+            var nowTime = new Date();
+            var runTime = parseInt((nowTime.getTime() - startTime.getTime()) / 1000);
+            runD = parseInt(runTime / (24 * 60 * 60));
+            runH = parseInt(runTime / (60 * 60) % 24);
+            runM = parseInt(runTime / 60 % 60);
+            runS = parseInt(runTime % 60);
+            if (runH < 10) {
+                runH = "0" + runH;
+            }
+            if (runM < 10) {
+                runM = "0" + runM;
+            }
+            if (runS < 10) {
+                runS = "0" + runS;
+            }
+            document.getElementById("timer").innerHTML = runD + " : " + runH + " : " + runM + " : " + runS;
+        }
+        var sh;
+        sh = setInterval(freshTime, 10);
+        var btn = document.getElementById('switchModeBtn');
+        btn.addEventListener("touchstart", function() {
+            btn.style.background = "rgba(0,0,0,0.2)";
+        });
+        btn.addEventListener("mousedown", function() {
+            btn.style.background = "rgba(0,0,0,0.2)";
+        });
+        btn.addEventListener("touchend", function() {
+            window.setTimeout('btn.style.background="white";', 100);
+        });
+        btn.addEventListener("mouseup", function() {
+            window.setTimeout('btn.style.background="white";', 100);
+        });
+        mode = "auto";
+        btn.addEventListener("click", function() {
+            if (mode == "auto") {
+                mode = "self";
+                speed = "slow";
+                btn.innerHTML = "手动旋转";
+            } else if (mode == "self") {
+                mode = "auto";
+                btn.innerHTML = "自动旋转";
+            }
+        });
+        window.setInterval("checkMode();", 1);
+        var title = document.getElementById('title');
+
+        function checkMode() {
+            if (mode == "auto") {
+                tran = 1.25;
+                title.innerHTML = name;
+            } else if (mode == "self") {
+                title.innerHTML = name;
+                if (speed == "fast" && tran > 0.01) {
+                    tran -= 0.001;
+                } else if (speed == "slow") {
+                    tran += 0.001;
+                }
+            }
+            document.getElementById('rotate').style.animationDuration = tran + "s";
+        }
+        document.documentElement.addEventListener("touchstart", function() {
+            if (mode == "self") {
+                speed = "fast";
+            }
+        });
+        document.documentElement.addEventListener("mousedown", function() {
+            if (mode == "self") {
+                speed = "fast";
+            }
+        });
+        document.documentElement.addEventListener("touchend", function() {
+            if (mode == "self") {
+                speed = "slow";
+            }
+        });
+        document.documentElement.addEventListener("mouseup", function() {
+            if (mode == "self") {
+                speed = "slow";
+            }
+        });
+    </script>
+</body>
+<footer style="margin-top: 20px;">
+<div>
+<a target="_blank" href="https://icp.gov.moe/?keyword=20255999" style="color: black; text-decoration: none;"><img src="/moe.png" width="15.5" height="15.5" style="margin-right: 5px;">萌ICP备20255999号</a>
+</div>
+<div>
+<a target="_blank" href="http://icp.im/beian/ICP-2025010098.html" style="color: black; text-decoration: none; margin-top: 50px;"><img src="http://xnn.asia/bqb" style="height: 15px; margin-right: 5px;">酱ICP备2025010098号</a>
+</div>
+</footer>
+
+</html>
